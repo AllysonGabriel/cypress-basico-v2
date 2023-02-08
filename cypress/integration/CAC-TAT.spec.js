@@ -7,11 +7,11 @@ describe.only("Central de Atendimento ao Cliente TAT", function () {
     cy.visit("./src/index.html");
   });
 
-  it("1. verifica o título da aplicação", function () {
+  it("1. Verifica o título da aplicação", function () {
     cy.title().should("be.equal", "Central de Atendimento ao Cliente TAT");
   });
 
-  it("preenche os campos obrigatórios e envia o formulário", function () {
+  it("2. Preenche os campos obrigatórios e envia o formulário", function () {
     let longText =
       "Teste, teste, teste, teste, Teste, teste, teste, teste,Teste, teste, teste, teste,Teste, teste, teste, teste,Teste, teste, teste, teste,Teste, teste, teste, teste,Teste, teste, teste, teste,Teste, teste, teste, teste,Teste, teste, teste, teste,Teste, teste, teste, teste,Teste, teste, teste, teste,Teste, teste, teste, teste,Teste, teste, teste, teste,Teste, teste, teste, teste,Teste, teste, teste, teste,Teste, teste, teste, teste,Teste, teste, teste, teste,Teste, teste, teste, teste";
     cy.clock();
@@ -26,7 +26,7 @@ describe.only("Central de Atendimento ao Cliente TAT", function () {
     cy.get(".success").should("not.be.visible", "Mensagem enviada com sucesso");
   });
 
-  it("exibe mensagem de erro ao submeter o formulário com um email com formatação inválida", function () {
+  it("3. Exibe mensagem de erro ao submeter o formulário com um email com formatação inválida", function () {
     cy.clock();
     cy.get("#firstName").type("Allyson");
     cy.get("#lastName").type("Gabriel");
@@ -57,7 +57,7 @@ describe.only("Central de Atendimento ao Cliente TAT", function () {
       );
     });
   });
-  it("campo telefone continua vazio quando preenchido com valor não-numerico ", function () {
+  it("4. Campo telefone continua vazio quando preenchido com valor não-numerico ", function () {
     cy.clock();
     cy.get("#firstName").type("Allyson");
     cy.get("#lastName").type("Gabriel");
@@ -71,7 +71,7 @@ describe.only("Central de Atendimento ao Cliente TAT", function () {
     cy.get(".success").should("not.be.visible", "Mensagem enviada com sucesso");
   });
 
-  it("exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário", function () {
+  it("5. Exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário", function () {
     cy.clock();
     cy.get("#firstName").type("Allyson");
     cy.get("#lastName").type("Gabriel");
@@ -85,7 +85,7 @@ describe.only("Central de Atendimento ao Cliente TAT", function () {
     cy.get(".error").should("not.be.visible", "Valide os campos obrigatórios!");
   });
 
-  it("preenche e limpa os campos nome, sobrenome, email e telefone", function () {
+  it("6. Preenche e limpa os campos nome, sobrenome, email e telefone", function () {
     cy.get("#firstName")
       .type("Allyson")
       .should("have.value", "Allyson")
@@ -108,7 +108,7 @@ describe.only("Central de Atendimento ao Cliente TAT", function () {
       .should("have.value", "");
   });
 
-  it("exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios", function () {
+  it("7. Exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios", function () {
     cy.clock();
     cy.contains("button", "Enviar").click();
     cy.get(".error").should("be.visible", "Valide os campos obrigatórios!");
@@ -117,7 +117,7 @@ describe.only("Central de Atendimento ao Cliente TAT", function () {
     cy.get(".error").should("not.be.visible", "Valide os campos obrigatórios!");
   });
 
-  it(" envia o formuário com sucesso usando um comando customizado", function () {
+  it("8. Envia o formuário com sucesso usando um comando customizado", function () {
     cy.clock();
     cy.fillMandatoryFieldsAndSubmit();
 
@@ -126,25 +126,25 @@ describe.only("Central de Atendimento ao Cliente TAT", function () {
     cy.get(".success").should("not.be.visible", "Mensagem enviada com sucesso");
   });
 
-  it("seleciona um produto (YouTube) por seu texto", function () {
+  it("9. Seleciona um produto (YouTube) por seu texto", function () {
     cy.get("#product").select("YouTube").should("have.value", "youtube");
   });
 
-  it("seleciona um produto (Mentoria) por seu valor (value)", function () {
+  it("10. Seleciona um produto (Mentoria) por seu valor (value)", function () {
     cy.get("#product").select("mentoria").should("have.value", "mentoria");
   });
 
-  it("seleciona um produto (Blog) por seu índice", function () {
+  it("12. Seleciona um produto (Blog) por seu índice", function () {
     cy.get("#product").select(1).should("have.value", "blog");
   });
 
-  it("marca o tipo de atendimento 'Feedback'", function () {
+  it("13. Marca o tipo de atendimento 'Feedback'", function () {
     cy.get("input[type='radio'][value='feedback'")
       .check()
       .should("have.value", "feedback");
   });
 
-  it("marca cada tipo de atendimento", function () {
+  it("14. Marca cada tipo de atendimento", function () {
     cy.get("input[type='radio']")
       .should("have.length", 3)
       .each(function ($radio) {
@@ -153,7 +153,7 @@ describe.only("Central de Atendimento ao Cliente TAT", function () {
       });
   });
 
-  it("marca ambos checkboxes, depois desmarca o último", function () {
+  it("15. Marca ambos checkboxes, depois desmarca o último", function () {
     cy.get("input[type='checkbox'")
       .check()
       .should("be.checked")
@@ -162,7 +162,7 @@ describe.only("Central de Atendimento ao Cliente TAT", function () {
       .should("not.be.checked");
   });
 
-  it("seleciona um arquivo da pasta fixtures", function () {
+  it("16. Seleciona um arquivo da pasta fixtures", function () {
     cy.get("input[type='file']")
       .should("not.have.value")
       .selectFile("./cypress/fixtures/example.json")
@@ -171,7 +171,7 @@ describe.only("Central de Atendimento ao Cliente TAT", function () {
       });
   });
 
-  it("seleciona um arquivo simulando um drag-and-drop", function () {
+  it("17. Seleciona um arquivo simulando um drag-and-drop", function () {
     cy.get("input[type='file']")
       .should("not.have.value")
       .selectFile("./cypress/fixtures/example.json", { action: "drag-drop" })
@@ -180,7 +180,7 @@ describe.only("Central de Atendimento ao Cliente TAT", function () {
       });
   });
 
-  it("seleciona um arquivo utilizando uma fixture para a qual foi dada um alias", function () {
+  it("18. Seleciona um arquivo utilizando uma fixture para a qual foi dada um alias", function () {
     cy.fixture("example.json").as("sampleFile");
     cy.get("input[type='file']")
       .selectFile("@sampleFile")
@@ -189,16 +189,16 @@ describe.only("Central de Atendimento ao Cliente TAT", function () {
       });
   });
 
-  it("verifica que a política de privacidade abre em outra aba sem a necessidade de um clique", function () {
+  it("19. Verifica que a política de privacidade abre em outra aba sem a necessidade de um clique", function () {
     cy.get("#privacy a").should("have.attr", "target", "_blank");
   });
 
-  it("acessa a página da política de privacidade removendo o target e então clicando no link", function () {
+  it("20. Acessa a página da política de privacidade removendo o target e então clicando no link", function () {
     cy.get("#privacy a").invoke("removeAttr", "target").click();
     cy.contains("Talking About Testing").should("be.visible");
   });
 
-  it("exibe e esconde as mensagens de sucesso e erro usando o .invoke()", function () {
+  it("21. Exibe e esconde as mensagens de sucesso e erro usando o .invoke()", function () {
     cy.get(".success")
       .should("not.be.visible")
       .invoke("show")
@@ -215,14 +215,14 @@ describe.only("Central de Atendimento ao Cliente TAT", function () {
       .should("not.be.visible");
   });
 
-  it("preenche a area de texto usando o comando invoke", function () {
+  it("22. Preenche a area de texto usando o comando invoke", function () {
     const longText2 = Cypress._.repeat("0123456789", 20);
     cy.get("#open-text-area")
       .invoke("val", longText2)
       .should("have.value", longText2);
   });
 
-  it("faz uma requisição HTTP", function () {
+  it("23. Faz uma requisição HTTP", function () {
     cy.request(
       "https://cac-tat.s3.eu-central-1.amazonaws.com/index.html"
     ).should(function (response) {
@@ -233,7 +233,7 @@ describe.only("Central de Atendimento ao Cliente TAT", function () {
     });
   });
 
-  it("encontra o gato escondido", function () {
+  it("24. Encontra o gato escondido", function () {
     cy.get("#cat").invoke("show").should("be.visible");
     cy.get("#title").invoke("text", "CAT TAT");
     cy.get("#subtitle").invoke("text", "Gatos");
